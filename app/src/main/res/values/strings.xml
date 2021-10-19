@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">OpenWeather App</string>
+    <string name="Cityname">CityName</string>
+    <string name="CurrentDate">CurrentDate</string>
+    <string name="Temp">Temperature</string>
+    <string name="Tempbelow">FeelLike</string>
+    <string name="CloudInfo">CloudInfo</string>
+    <string name="AirInfo">AirInfo</string>
+    <string name="Humidity">Humidity: 51</string>
+    <string name="UVIndex">UVIndex</string>
+    <string name="Visibilty">Visibilty</string>
+</resources>
