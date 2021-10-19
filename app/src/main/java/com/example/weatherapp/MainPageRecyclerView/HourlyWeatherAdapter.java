@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,17 +24,25 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
+import com.example.weatherapp.Api.Classes.Hourly;
 import com.example.weatherapp.R;
 
 public class HourlyWeatherAdapter extends RecyclerView.Adapter<HourlyWeatherAdapter.Viewholder> implements Filterable {
 
     Context context;
+    List<Hourly> data;
 
-    public HourlyWeatherAdapter( Context context) {
+    public HourlyWeatherAdapter(List<Hourly> data, Context context) {
         this.context = context;
+        this.data = data;
     }
 
 
@@ -47,12 +56,34 @@ public class HourlyWeatherAdapter extends RecyclerView.Adapter<HourlyWeatherAdap
 
     @Override
     public void onBindViewHolder(@NonNull HourlyWeatherAdapter.Viewholder holder, int position) {
+        Hourly obj = data.get(position);
+        holder.desc.setText(obj.weather.get(0).description);
+        holder.temp.setText(String.valueOf(obj.temp));
+
+        String iconCode = "_" + obj.weather.get(0).icon;
+        int iconResId = context.getResources().getIdentifier(iconCode,
+                "drawable", context.getPackageName());
+        holder.icon.setImageResource(iconResId);
+
+        long unix = obj.dt;
+        SimpleDateFormat sdfx = new java.text.SimpleDateFormat("hh:mm a");
+        Date date = new java.util.Date(unix * 1000L);
+        holder.time.setText(sdfx.format(date));
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+
+        Calendar c2 = Calendar.getInstance();
+        if (c2.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault()).equals(c.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())))
+            holder.day.setText("Today");
+        else
+            holder.day.setText(c.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault()) + "");
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return data.size();
     }
 
 
@@ -64,19 +95,16 @@ public class HourlyWeatherAdapter extends RecyclerView.Adapter<HourlyWeatherAdap
 
     class Viewholder extends RecyclerView.ViewHolder {
 
-        private TextView title,desc,deadlinedate,startdate;
-        private ImageView imageView;
+        private TextView day, time, temp, desc;
+        private ImageView icon;
 
         public Viewholder(@NonNull View itemView) {
             super(itemView);
-
-
-        }
-
-
-        private void setData() {
-
-
+            day = itemView.findViewById(R.id.Day);
+            time = itemView.findViewById(R.id.Time);
+            temp = itemView.findViewById(R.id.Description);
+            desc = itemView.findViewById(R.id.HourlyDescription);
+            icon = itemView.findViewById(R.id.imageView2);
         }
     }
 

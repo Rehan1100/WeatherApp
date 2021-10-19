@@ -12,6 +12,7 @@
         android:layout_height="wrap_content">
 
         <RelativeLayout
+            android:id="@+id/mainLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -84,7 +85,7 @@
                         android:id="@+id/weathericon"
                         android:layout_width="@dimen/_122sdp"
                         android:layout_height="@dimen/_122sdp"
-                        android:src="@drawable/cloud"
+                        android:src="@drawable/_02d"
 
                         tools:ignore="ContentDescription" />
                 </LinearLayout>
@@ -248,17 +249,16 @@
                 android:layout_below="@id/SevenContainer"
                 android:padding="@dimen/_6sdp"
                 >
+
                 <TextView
-                    android:id="@+id/sunrise"
+                    android:id="@+id/sunset"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Surnrise"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_12sdp"
-/>
+                    android:textSize="@dimen/_12sdp" />
                 <TextView
-                    android:id="@+id/sunset"
-
+                    android:id="@+id/sunrise"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Surnset"

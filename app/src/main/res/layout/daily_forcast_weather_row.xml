@@ -80,7 +80,7 @@
                 android:id="@+id/weathericon"
                 android:layout_width="@dimen/_122sdp"
                 android:layout_height="@dimen/_122sdp"
-                android:src="@drawable/cloud"
+                android:src="@drawable/_10d"
  />
         </LinearLayout>
 

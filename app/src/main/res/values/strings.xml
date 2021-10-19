@@ -9,4 +9,5 @@
     <string name="Humidity">Humidity: 51</string>
     <string name="UVIndex">UVIndex</string>
     <string name="Visibilty">Visibilty</string>
+    <string name="no_internet">No Internet Connection</string>
 </resources>
