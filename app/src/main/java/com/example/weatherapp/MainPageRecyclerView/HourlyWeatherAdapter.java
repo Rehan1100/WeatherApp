@@ -1,5 +1,7 @@
 package com.example.weatherapp.MainPageRecyclerView;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,10 +41,14 @@ public class HourlyWeatherAdapter extends RecyclerView.Adapter<HourlyWeatherAdap
 
     Context context;
     List<Hourly> data;
+    String tempunit;
 
     public HourlyWeatherAdapter(List<Hourly> data, Context context) {
         this.context = context;
         this.data = data;
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences("user_settings",MODE_PRIVATE);
+        tempunit = sharedPreferences.getString("tempunit","F");
     }
 
 
@@ -56,9 +62,19 @@ public class HourlyWeatherAdapter extends RecyclerView.Adapter<HourlyWeatherAdap
 
     @Override
     public void onBindViewHolder(@NonNull HourlyWeatherAdapter.Viewholder holder, int position) {
+
+
         Hourly obj = data.get(position);
+
         holder.desc.setText(obj.weather.get(0).description);
-        holder.temp.setText(String.valueOf(obj.temp));
+        if(tempunit.equals("C")){
+            int temp = convertoC(obj.temp);
+            holder.temp.setText(String.valueOf(temp)+"°C");
+        }
+        else if(tempunit.equals("F")){
+            int temp = convertoF(obj.temp);
+            holder.temp.setText(String.valueOf(temp)+"°F");
+        }
 
         String iconCode = "_" + obj.weather.get(0).icon;
         int iconResId = context.getResources().getIdentifier(iconCode,
@@ -106,6 +122,16 @@ public class HourlyWeatherAdapter extends RecyclerView.Adapter<HourlyWeatherAdap
             desc = itemView.findViewById(R.id.HourlyDescription);
             icon = itemView.findViewById(R.id.imageView2);
         }
+    }
+    public int convertoF(double tempinK){
+        int tempinF = 0;
+        tempinF = (int)((tempinK - 273.15) * 9/5 + 32);
+        return tempinF;
+    }
+    public int convertoC(double tempinK){
+        int tempinC = 0;
+        tempinC = (int)(tempinK - 273.15);
+        return tempinC;
     }
 
 }

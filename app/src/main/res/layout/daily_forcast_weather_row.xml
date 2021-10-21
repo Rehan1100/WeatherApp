@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/bg"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <LinearLayout
@@ -24,11 +23,12 @@
 
             />
     </LinearLayout>
+
     <RelativeLayout
-        android:layout_below="@+id/FirstContainer"
         android:id="@+id/SecondContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/FirstContainer"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -61,6 +61,7 @@
                 android:text="Probability"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_12sdp" />
+
             <TextView
                 android:id="@+id/UvIndex"
                 android:layout_width="wrap_content"
@@ -80,11 +81,11 @@
                 android:id="@+id/weathericon"
                 android:layout_width="@dimen/_122sdp"
                 android:layout_height="@dimen/_122sdp"
-                android:src="@drawable/_10d"
- />
+                android:src="@drawable/_10d" />
         </LinearLayout>
 
     </RelativeLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/SixContainer"
         android:layout_width="match_parent"
