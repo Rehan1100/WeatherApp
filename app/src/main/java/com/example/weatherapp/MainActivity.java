@@ -75,7 +75,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         init();
-
+        if(obj!=null){
+            setData(obj);
+        }
 
         sharedPreferences = getSharedPreferences("user_settings", MODE_PRIVATE);
         tempunit = sharedPreferences.getString("tempunit", "F");
@@ -84,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         city = sharedPreferences.getString("city", "Chicago, Illinois");
         cityname = city;
 
-        hasNetworkConnection();
+        if(hasNetworkConnection())
         dataRequest();
 
         SwipeRefreshLayout swipe = findViewById(R.id.pulltorefresh);
@@ -92,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 if (hasNetworkConnection()) {
+                    progressBar.setVisibility(View.VISIBLE);
                     dataRequest();
                 }
                 else
@@ -202,6 +205,7 @@ public class MainActivity extends AppCompatActivity {
         HourlyWeatherrecyclerView.setLayoutManager(linearLayoutManager);
         HourlyWeatherrecyclerView.setAdapter(hourlyWeatherAdapter);
         hourlyWeatherAdapter.notifyDataSetChanged();
+        progressBar.setVisibility(View.GONE);
     }
 
     @Override
@@ -227,30 +231,30 @@ public class MainActivity extends AppCompatActivity {
             case R.id.unitf:
 
 
-               if (datanow!=null){
+                if (datanow!=null){
 
 
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                String current_unit = sharedPreferences.getString("tempunit", "F");
-                if (current_unit.equals("F")) {
-                    item.setIcon(R.drawable.units_c);
-                    editor.putString("tempunit", "C");
-                    editor.apply();
-                    tempunit = "C";
-                    setData(datanow);
-                } else if (current_unit.equals("C")) {
-                    item.setIcon(R.drawable.units_f);
-                    editor.putString("tempunit", "F");
-                    editor.apply();
-                    tempunit = "F";
-                    setData(datanow);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    String current_unit = sharedPreferences.getString("tempunit", "F");
+                    if (current_unit.equals("F")) {
+                        item.setIcon(R.drawable.units_c);
+                        editor.putString("tempunit", "C");
+                        editor.apply();
+                        tempunit = "C";
+                        setData(datanow);
+                    } else if (current_unit.equals("C")) {
+                        item.setIcon(R.drawable.units_f);
+                        editor.putString("tempunit", "F");
+                        editor.apply();
+                        tempunit = "F";
+                        setData(datanow);
+                    }
                 }
-            }
-               else {
-                   Toast.makeText(getApplicationContext(), "Wait to load Data", Toast.LENGTH_SHORT).show();
+                else {
+                    Toast.makeText(getApplicationContext(), "Wait to load Data", Toast.LENGTH_SHORT).show();
 
-               }
-            return true;
+                }
+                return true;
             case R.id.daily:
                 if (datanow!=null)
                 {
@@ -294,6 +298,7 @@ public class MainActivity extends AppCompatActivity {
                                 editor.putString("lon", String.valueOf(lon));
                                 editor.putString("city", city);
                                 editor.apply();
+                                progressBar.setVisibility(View.VISIBLE);
                                 dataRequest();
                             }
                         }
@@ -332,6 +337,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<Root> call, Throwable t) {
                         Toast.makeText(MainActivity.this, R.string.invalid_loc, Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
                     }
                 });
 
@@ -346,7 +352,7 @@ public class MainActivity extends AppCompatActivity {
         ConnectivityManager connectivityManager = getSystemService(ConnectivityManager.class);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnectedOrConnecting()) {
-           // main.setVisibility(View.VISIBLE);
+            // main.setVisibility(View.VISIBLE);
         } else {
             if(datanow==null) {
                 main.setVisibility(View.GONE);
