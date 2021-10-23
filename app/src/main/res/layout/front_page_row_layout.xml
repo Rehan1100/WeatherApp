@@ -56,7 +56,7 @@
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="@dimen/_122sdp"
-        android:layout_height="@dimen/_122sdp"
+        android:layout_height="@dimen/_132sdp"
         app:layout_constraintBottom_toTopOf="@+id/Description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

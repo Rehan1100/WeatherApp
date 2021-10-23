@@ -7,54 +7,75 @@
     android:background="@drawable/bg"
     tools:context=".MainActivity">
 
+    <ProgressBar
+        android:id="@+id/Progressbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/_140sdp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="@dimen/_1sdp"
+        android:layout_marginBottom="@dimen/_1sdp">
+
+    </ProgressBar>
+
+    <RelativeLayout
+        android:id="@+id/layout"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/FirstContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/cityname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/backBlue"
+                android:text="@string/Cityname"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp" />
+
+            <TextView
+                android:id="@+id/currentDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/backBlue"
+                android:text="@string/CurrentDate"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp" />
+        </LinearLayout>
+    </RelativeLayout>
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/pulltorefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout">
 
         <ScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
 
             <RelativeLayout
                 android:id="@+id/mainLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:visibility="gone">
 
-                <LinearLayout
-                    android:id="@+id/FirstContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/cityname"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/backBlue"
-                        android:text="@string/Cityname"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_15sdp" />
-
-                    <TextView
-                        android:id="@+id/currentDate"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/backBlue"
-                        android:text="@string/CurrentDate"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_15sdp" />
-                </LinearLayout>
 
                 <RelativeLayout
                     android:id="@+id/SecondContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/FirstContainer"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -70,7 +91,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/Temp"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/_32sdp" />
+                            android:textSize="@dimen/_30sdp" />
 
                         <TextView
                             android:id="@+id/FeelLike"
@@ -78,7 +99,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/Tempbelow"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/_22sdp" />
+                            android:textSize="@dimen/_20sdp" />
 
                     </LinearLayout>
 
@@ -112,7 +133,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/CloudInfo"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/_15sdp"
+                        android:textSize="@dimen/_12sdp"
 
                         />
 
@@ -122,7 +143,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/AirInfo"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/_15sdp"
+                        android:textSize="@dimen/_12sdp"
 
                         />
 
@@ -141,7 +162,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/Humidity"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/_15sdp" />
+                        android:textSize="@dimen/_18sdp" />
                 </LinearLayout>
 
                 <RelativeLayout
@@ -158,7 +179,7 @@
                         android:layout_height="wrap_content"
                         android:text="UvIndex"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/_15sdp"
+                        android:textSize="@dimen/_18sdp"
 
                         />
 
@@ -170,7 +191,7 @@
                         android:layout_alignParentRight="true"
                         android:text="Visibilty"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/_15sdp"
+                        android:textSize="@dimen/_18sdp"
 
                         />
 
@@ -182,7 +203,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/FifthContainer"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/_15sdp">
 
                     <TextView
                         android:id="@+id/morningtemprature"
@@ -190,8 +212,8 @@
                         android:layout_height="wrap_content"
                         android:text="160F"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/_25sdp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:textSize="@dimen/_23sdp"
+                        app:layout_constraintBottom_toTopOf="@+id/morningtemprature1"
                         app:layout_constraintEnd_toStartOf="@+id/daytimeTemp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -200,11 +222,10 @@
                         android:id="@+id/daytimeTemp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/_12sdp"
                         android:text="160F"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/_25sdp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:textSize="@dimen/_23sdp"
+                        app:layout_constraintBottom_toTopOf="@+id/daytimeTemp1"
                         app:layout_constraintEnd_toStartOf="@+id/eveningTemprature"
                         app:layout_constraintStart_toEndOf="@+id/morningtemprature"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -215,8 +236,8 @@
                         android:layout_height="wrap_content"
                         android:text="160F"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/_25sdp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:textSize="@dimen/_23sdp"
+                        app:layout_constraintBottom_toTopOf="@+id/eveningTemprature1"
                         app:layout_constraintEnd_toStartOf="@+id/NightTemprature"
                         app:layout_constraintStart_toEndOf="@+id/daytimeTemp"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -227,13 +248,62 @@
                         android:layout_height="wrap_content"
                         android:text="160F"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/_25sdp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:textSize="@dimen/_23sdp"
+                        app:layout_constraintBottom_toTopOf="@+id/NightTemprature1"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/eveningTemprature"
                         app:layout_constraintTop_toTopOf="parent" />
 
+                    <TextView
+                        android:id="@+id/morningtemprature1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="8am"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_13sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/daytimeTemp1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/morningtemprature" />
+
+                    <TextView
+                        android:id="@+id/daytimeTemp1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1am"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_13sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/eveningTemprature1"
+                        app:layout_constraintStart_toEndOf="@+id/morningtemprature1"
+                        app:layout_constraintTop_toBottomOf="@+id/daytimeTemp" />
+
+                    <TextView
+                        android:id="@+id/eveningTemprature1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5pm"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_13sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/NightTemprature1"
+                        app:layout_constraintStart_toEndOf="@+id/daytimeTemp1"
+                        app:layout_constraintTop_toBottomOf="@+id/eveningTemprature" />
+
+                    <TextView
+                        android:id="@+id/NightTemprature1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="11pm"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_13sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/eveningTemprature1"
+                        app:layout_constraintTop_toBottomOf="@+id/NightTemprature" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                 <RelativeLayout
                     android:id="@+id/SevenContainer"
@@ -242,6 +312,7 @@
                     android:layout_below="@id/SixContainer">
 
                     <androidx.recyclerview.widget.RecyclerView
+
                         android:id="@+id/HourlyWeatherRecylerView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
@@ -251,6 +322,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_26sdp"
                     android:layout_below="@id/SevenContainer"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="bottom"
                     android:background="@drawable/bg"
                     android:padding="@dimen/_6sdp">
 

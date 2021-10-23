@@ -25,6 +25,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,10 +56,11 @@ public class MainActivity extends AppCompatActivity {
 
     TextView CityName, CurrentDate, Temprature, FeelLike, weatherDescription, wind, Humadity, Uvindex, Visibilty, morningtimeTemp, DaytimeTemp, EveningtimeTemp, NighttimeTemp, Sunset, SunRise;
     ImageView WeatherIcon;
-    RelativeLayout main;
+    RelativeLayout main,layout;
     String tempunit;
     Root datanow;
     String city = "Chicago, Illinois";
+    ProgressBar progressBar;
 
     RecyclerView HourlyWeatherrecyclerView;
     SharedPreferences sharedPreferences;
@@ -120,6 +122,11 @@ public class MainActivity extends AppCompatActivity {
         SunRise = findViewById(R.id.sunrise);
         WeatherIcon = findViewById(R.id.weathericon);
         main = findViewById(R.id.mainLayout);
+        layout = findViewById(R.id.layout);
+        progressBar = findViewById(R.id.Progressbar);
+
+        layout.setVisibility(View.GONE);
+        main.setVisibility(View.GONE);
     }
 
     public void setData(Root response) {
@@ -218,6 +225,11 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.unitf:
+
+
+               if (datanow!=null){
+
+
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 String current_unit = sharedPreferences.getString("tempunit", "F");
                 if (current_unit.equals("F")) {
@@ -233,10 +245,23 @@ public class MainActivity extends AppCompatActivity {
                     tempunit = "F";
                     setData(datanow);
                 }
-                return true;
+            }
+               else {
+                   Toast.makeText(getApplicationContext(), "Wait to load Data", Toast.LENGTH_SHORT).show();
+
+               }
+            return true;
             case R.id.daily:
-                cityname = city;
-                startActivity(new Intent(MainActivity.this, ForcastActivity.class));
+                if (datanow!=null)
+                {
+                    cityname = city;
+                    startActivity(new Intent(MainActivity.this, ForcastActivity.class));
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "Wait to load Data", Toast.LENGTH_SHORT).show();
+
+                }
+
                 return true;
             case R.id.location:
 
@@ -298,6 +323,10 @@ public class MainActivity extends AppCompatActivity {
                         setData(response.body());
                         datanow = response.body();
                         obj = datanow;
+
+                        layout.setVisibility(View.VISIBLE);
+                        main.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
                     }
 
                     @Override
@@ -317,7 +346,7 @@ public class MainActivity extends AppCompatActivity {
         ConnectivityManager connectivityManager = getSystemService(ConnectivityManager.class);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnectedOrConnecting()) {
-            main.setVisibility(View.VISIBLE);
+           // main.setVisibility(View.VISIBLE);
         } else {
             if(datanow==null) {
                 main.setVisibility(View.GONE);
@@ -414,4 +443,6 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
     }
+
+
 }
