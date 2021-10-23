@@ -10,4 +10,6 @@
     <string name="UVIndex">UVIndex</string>
     <string name="Visibilty">Visibilty</string>
     <string name="no_internet">No Internet Connection</string>
+    <string name="invalid_loc">Not a valid location</string>
+    <string name="dailog_text">For US locations, Enter as \'city\' or \'city, state \n\nFor International locations, Enter as \'city, country\'</string>
 </resources>

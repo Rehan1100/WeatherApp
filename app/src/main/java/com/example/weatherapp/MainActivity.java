@@ -1,21 +1,29 @@
 package com.example.weatherapp;
 
+import static com.example.weatherapp.Constants.cityname;
 import static com.example.weatherapp.Constants.obj;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -26,7 +34,9 @@ import com.example.weatherapp.Api.Classes.Root;
 import com.example.weatherapp.Api.WeatherApi;
 import com.example.weatherapp.ForcastDaily.ForcastActivity;
 import com.example.weatherapp.MainPageRecyclerView.HourlyWeatherAdapter;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -48,12 +58,13 @@ public class MainActivity extends AppCompatActivity {
     RelativeLayout main;
     String tempunit;
     Root datanow;
+    String city = "Chicago, Illinois";
 
     RecyclerView HourlyWeatherrecyclerView;
     SharedPreferences sharedPreferences;
 
-    double lat=41.8675766;
-    double lon= -87.616232;
+    double lat = 41.8675766;
+    double lon = -87.616232;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -64,12 +75,29 @@ public class MainActivity extends AppCompatActivity {
         init();
 
 
-        sharedPreferences = getSharedPreferences("user_settings",MODE_PRIVATE);
-        tempunit = sharedPreferences.getString("tempunit","F");
-
+        sharedPreferences = getSharedPreferences("user_settings", MODE_PRIVATE);
+        tempunit = sharedPreferences.getString("tempunit", "F");
+        lat = Double.parseDouble(sharedPreferences.getString("lat", "41.8675766"));
+        lon = Double.parseDouble(sharedPreferences.getString("lon", "41.8675766"));
+        city = sharedPreferences.getString("city", "Chicago, Illinois");
+        cityname = city;
 
         hasNetworkConnection();
         dataRequest();
+
+        SwipeRefreshLayout swipe = findViewById(R.id.pulltorefresh);
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (hasNetworkConnection()) {
+                    dataRequest();
+                }
+                else
+                    Toast.makeText(MainActivity.this, "No internet", Toast.LENGTH_SHORT).show();
+                swipe.setRefreshing(false);
+
+            }
+        });
 
     }
 
@@ -106,37 +134,36 @@ public class MainActivity extends AppCompatActivity {
             CurrentDate.setText(formattedTimeString);
         }
 
-
-        if(tempunit.equals("C")){
+        CityName.setText(city);
+        if (tempunit.equals("C")) {
             int temp;
             temp = convertoC(response.current.temp);
-            Temprature.setText(String.valueOf(temp)+"°C");
+            Temprature.setText(String.valueOf(temp) + "°C");
             temp = convertoC(response.current.feels_like);
-            FeelLike.setText("Feels Like "+String.valueOf(temp)+"°C");
+            FeelLike.setText("Feels Like " + String.valueOf(temp) + "°C");
             temp = convertoC(response.daily.get(0).temp.morn);
-            morningtimeTemp.setText(String.valueOf(temp)+"°C");
+            morningtimeTemp.setText(String.valueOf(temp) + "°C");
             temp = convertoC(response.daily.get(0).temp.day);
-            DaytimeTemp.setText(String.valueOf(temp)+"°C");
+            DaytimeTemp.setText(String.valueOf(temp) + "°C");
             temp = convertoC(response.daily.get(0).temp.eve);
-            EveningtimeTemp.setText(String.valueOf(temp)+"°C");
+            EveningtimeTemp.setText(String.valueOf(temp) + "°C");
             temp = convertoC(response.daily.get(0).temp.night);
-            NighttimeTemp.setText(String.valueOf(temp)+"°C");
+            NighttimeTemp.setText(String.valueOf(temp) + "°C");
 
-        }
-        else if(tempunit.equals("F")){
+        } else if (tempunit.equals("F")) {
             int temp;
             temp = convertoF(response.current.temp);
-            Temprature.setText(String.valueOf(temp)+"°F");
+            Temprature.setText(String.valueOf(temp) + "°F");
             temp = convertoF(response.current.feels_like);
-            FeelLike.setText("Feels Like "+String.valueOf(temp)+"°F");
+            FeelLike.setText("Feels Like " + String.valueOf(temp) + "°F");
             temp = convertoF(response.daily.get(0).temp.morn);
-            morningtimeTemp.setText(String.valueOf(temp)+"°F");
+            morningtimeTemp.setText(String.valueOf(temp) + "°F");
             temp = convertoF(response.daily.get(0).temp.day);
-            DaytimeTemp.setText(String.valueOf(temp)+"°F");
+            DaytimeTemp.setText(String.valueOf(temp) + "°F");
             temp = convertoF(response.daily.get(0).temp.eve);
-            EveningtimeTemp.setText(String.valueOf(temp)+"°F");
+            EveningtimeTemp.setText(String.valueOf(temp) + "°F");
             temp = convertoF(response.daily.get(0).temp.night);
-            NighttimeTemp.setText(String.valueOf(temp)+"°F");
+            NighttimeTemp.setText(String.valueOf(temp) + "°F");
 
         }
 
@@ -145,26 +172,26 @@ public class MainActivity extends AppCompatActivity {
         int iconResId = getResources().getIdentifier(iconCode,
                 "drawable", getPackageName());
         WeatherIcon.setImageResource(iconResId);
-        Humadity.setText("Humidity: "+String.valueOf(response.current.humidity)+"%");
-        float vis = response.current.visibility/1609;
-        Visibilty.setText("Visibility: "+String.valueOf(vis)+"mi");
-        Uvindex.setText("UV Index: "+response.current.uvi);
-        weatherDescription.setText(response.current.weather.get(0).description+"("+response.current.clouds+"%"+" Clouds"+")");
+        Humadity.setText("Humidity: " + String.valueOf(response.current.humidity) + "%");
+        float vis = response.current.visibility / 1609;
+        Visibilty.setText("Visibility: " + String.valueOf(vis) + "mi");
+        Uvindex.setText("UV Index: " + response.current.uvi);
+        weatherDescription.setText(response.current.weather.get(0).description + "(" + response.current.clouds + "%" + " Clouds" + ")");
 
         long unix = response.daily.get(0).sunrise;
         SimpleDateFormat sdfx = new java.text.SimpleDateFormat("hh:mm a");
         Date date = new java.util.Date(unix * 1000L);
-        SunRise.setText("Sunset: "+sdfx.format(date));
+        SunRise.setText("Sunrise: " + sdfx.format(date));
 
         unix = response.daily.get(0).sunset;
         date = new java.util.Date(unix * 1000L);
-        Sunset.setText("Sunrise: "+sdfx.format(date));
+        Sunset.setText("Sunset: " + sdfx.format(date));
 
         String deg = getDirection(response.current.wind_deg);
-        wind.setText("Wind: "+deg+" at "+response.current.wind_speed+"mph");
+        wind.setText("Wind: " + deg + " at " + response.current.wind_speed + "mph");
 
-        HourlyWeatherAdapter hourlyWeatherAdapter = new HourlyWeatherAdapter(response.hourly,MainActivity.this);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MainActivity.this,RecyclerView.HORIZONTAL,false);
+        HourlyWeatherAdapter hourlyWeatherAdapter = new HourlyWeatherAdapter(response.hourly, MainActivity.this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MainActivity.this, RecyclerView.HORIZONTAL, false);
         HourlyWeatherrecyclerView.setLayoutManager(linearLayoutManager);
         HourlyWeatherrecyclerView.setAdapter(hourlyWeatherAdapter);
         hourlyWeatherAdapter.notifyDataSetChanged();
@@ -175,13 +202,12 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.option_menu, menu);
 
-        sharedPreferences = getSharedPreferences("user_settings",MODE_PRIVATE);
-        tempunit = sharedPreferences.getString("tempunit","F");
+        sharedPreferences = getSharedPreferences("user_settings", MODE_PRIVATE);
+        tempunit = sharedPreferences.getString("tempunit", "F");
 
-        if(tempunit.equals("C")){
+        if (tempunit.equals("C")) {
             menu.getItem(0).setIcon(R.drawable.units_c);
-        }
-        else if(tempunit.equals("F")){
+        } else if (tempunit.equals("F")) {
             menu.getItem(0).setIcon(R.drawable.units_f);
         }
         return true;
@@ -192,17 +218,15 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.unitf:
-                Toast.makeText(getApplicationContext(), "unitf Selected", Toast.LENGTH_LONG).show();
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                String current_unit = sharedPreferences.getString("tempunit","F");
-                if(current_unit.equals("F")) {
+                String current_unit = sharedPreferences.getString("tempunit", "F");
+                if (current_unit.equals("F")) {
                     item.setIcon(R.drawable.units_c);
                     editor.putString("tempunit", "C");
                     editor.apply();
                     tempunit = "C";
                     setData(datanow);
-                }
-                else if(current_unit.equals("C")) {
+                } else if (current_unit.equals("C")) {
                     item.setIcon(R.drawable.units_f);
                     editor.putString("tempunit", "F");
                     editor.apply();
@@ -211,11 +235,46 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return true;
             case R.id.daily:
-                Toast.makeText(getApplicationContext(), "daily Selected", Toast.LENGTH_LONG).show();
+                cityname = city;
                 startActivity(new Intent(MainActivity.this, ForcastActivity.class));
                 return true;
             case R.id.location:
-                Toast.makeText(getApplicationContext(), "location 3 Selected", Toast.LENGTH_LONG).show();
+
+                final String[] inputString = {""};
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setMessage(R.string.dailog_text);
+                builder.setTitle("Enter a location");
+                final EditText input = new EditText(MainActivity.this);
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                builder.setView(input);
+                builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        inputString[0] = input.getText().toString();
+                        if (inputString[0].length() > 0) {
+                            double[] latlong = getLatLon(inputString[0]);
+                            if (latlong[0] != 0 || latlong[1] != 0) {
+                                lat = latlong[0];
+                                lon = latlong[1];
+                                city = getLocationName(inputString[0]);
+                                sharedPreferences = getSharedPreferences("user_settings", MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString("lat", String.valueOf(lat));
+                                editor.putString("lon", String.valueOf(lon));
+                                editor.putString("city", city);
+                                editor.apply();
+                                dataRequest();
+                            }
+                        }
+                    }
+                });
+                builder.show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -232,7 +291,7 @@ public class MainActivity extends AppCompatActivity {
                         .build();
 
                 WeatherApi weatherApi = retrofit.create(WeatherApi.class);
-                Call<Root> call = weatherApi.getWeather(lat,lon,"4a7f66f7868207ca0b55c014ec939235");
+                Call<Root> call = weatherApi.getWeather(lat, lon, "4a7f66f7868207ca0b55c014ec939235");
                 call.enqueue(new Callback<Root>() {
                     @Override
                     public void onResponse(Call<Root> call, Response<Root> response) {
@@ -243,7 +302,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<Root> call, Throwable t) {
-                        Toast.makeText(MainActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, R.string.invalid_loc, Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -260,8 +319,10 @@ public class MainActivity extends AppCompatActivity {
         if (networkInfo != null && networkInfo.isConnectedOrConnecting()) {
             main.setVisibility(View.VISIBLE);
         } else {
-            main.setVisibility(View.GONE);
-            CurrentDate.setText(R.string.no_internet);
+            if(datanow==null) {
+                main.setVisibility(View.GONE);
+                CurrentDate.setText(R.string.no_internet);
+            }
         }
 
 
@@ -294,14 +355,63 @@ public class MainActivity extends AppCompatActivity {
         return "X"; // We'll use 'X' as the default if we get a bad value
     }
 
-    public int convertoF(double tempinK){
+    public int convertoF(double tempinK) {
         int tempinF = 0;
-        tempinF = (int)((tempinK - 273.15) * 9/5 + 32);
+        tempinF = (int) ((tempinK - 273.15) * 9 / 5 + 32);
         return tempinF;
     }
-    public int convertoC(double tempinK){
+
+    public int convertoC(double tempinK) {
         int tempinC = 0;
-        tempinC = (int)(tempinK - 273.15);
+        tempinC = (int) (tempinK - 273.15);
         return tempinC;
+    }
+
+    private double[] getLatLon(String userProvidedLocation) {
+        Geocoder geocoder = new Geocoder(this); // Here, “this” is an Activity
+        try {
+            List<Address> address =
+                    geocoder.getFromLocationName(userProvidedLocation, 1);
+            if (address == null || address.isEmpty()) {
+                // Nothing returned!
+                return null;
+            }
+            lat = address.get(0).getLatitude();
+            lon = address.get(0).getLongitude();
+
+            return new double[]{lat, lon};
+        } catch (IOException e) {
+            // Failure to get an Address object
+            return null;
+        }
+    }
+
+    private String getLocationName(String userProvidedLocation) {
+        Geocoder geocoder = new Geocoder(this); // Here, “this” is an Activity
+        try {
+            List<Address> address =
+                    geocoder.getFromLocationName(userProvidedLocation, 1);
+            if (address == null || address.isEmpty()) {
+                // Nothing returned!
+                return null;
+            }
+            String country = address.get(0).getCountryCode();
+            String p1 = "";
+            String p2 = "";
+            if (country.equals("US")) {
+                p1 = address.get(0).getLocality();
+                p2 = address.get(0).getAdminArea();
+            } else {
+                p1 = address.get(0).getLocality();
+                if (p1 == null)
+                    p1 = address.get(0).getSubAdminArea();
+                p2 = address.get(0).getCountryName();
+            }
+            String locale = p1 + ", " + p2;
+            return locale;
+        } catch (IOException e) {
+            // Failure to get an Address object
+            return null;
+        }
     }
 }

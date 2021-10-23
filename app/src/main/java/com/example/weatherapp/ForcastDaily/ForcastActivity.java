@@ -1,5 +1,6 @@
 package com.example.weatherapp.ForcastDaily;
 
+import static com.example.weatherapp.Constants.cityname;
 import static com.example.weatherapp.Constants.obj;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +26,7 @@ public class ForcastActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forcast);
         recyclerView=findViewById(R.id.forcastRecyclerView);
+        getSupportActionBar().setTitle(cityname);
 
         ForcastDailyAdapter forcastDailyAdapter = new ForcastDailyAdapter(obj.daily,this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,RecyclerView.VERTICAL,false);
