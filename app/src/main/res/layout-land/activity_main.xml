@@ -57,6 +57,18 @@
         </RelativeLayout>
     </RelativeLayout>
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/pulltorefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
 
     <RelativeLayout
         android:id="@+id/mainLayout"
@@ -324,5 +336,6 @@
             android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
     </RelativeLayout>
 
-
+        </RelativeLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </RelativeLayout>
