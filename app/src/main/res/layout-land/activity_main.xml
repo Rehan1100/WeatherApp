@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    tools:context=".MainActivity">
+
+    <RelativeLayout
+        android:id="@+id/layout"
+        android:visibility="visible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/FirstContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/backBlue">
+
+            <TextView
+                android:id="@+id/cityname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/backBlue"
+                android:text="@string/Cityname"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp" />
+
+            <TextView
+                android:id="@+id/currentDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp"
+                android:background="@color/backBlue"
+                android:text="@string/CurrentDate"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/SecondContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/weatherDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="80dp"
+
+            android:text="@string/CloudInfo"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12sdp" />
+
+        <TextView
+            android:id="@+id/Winds"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="24dp"
+            android:text="@string/AirInfo"
+
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12sdp" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ThirdContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/SecondContainer"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/ThirdContainerInner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/_6sdp">
+
+            <TextView
+                android:id="@+id/Temprature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Temp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_30sdp" />
+
+            <TextView
+                android:id="@+id/FeelLike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Tempbelow"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_20sdp" />
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/FourthContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/_6sdp">
+
+            <TextView
+                android:id="@+id/Humidity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Humidity"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_18sdp" />
+
+            <TextView
+                android:id="@+id/UvIndex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="UvIndex"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_18sdp"
+
+                />
+
+            <TextView
+                android:id="@+id/Visibilty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="Visibilty"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_18sdp"
+
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@id/SevenContainer"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical"
+            android:padding="@dimen/_6sdp">
+
+            <TextView
+                android:id="@+id/sunrise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Surnrise"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp" />
+
+            <TextView
+                android:id="@+id/sunset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="Surnset"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            >
+
+            <ImageView
+                android:id="@+id/weathericon"
+                android:layout_width="@dimen/_92sdp"
+                android:layout_height="@dimen/_92sdp"
+                android:src="@drawable/_02d"
+
+                tools:ignore="ContentDescription" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/FourthContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ThirdContainer"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/_15sdp">
+
+        <TextView
+            android:id="@+id/morningtemprature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="160F"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_23sdp"
+            app:layout_constraintBottom_toTopOf="@+id/morningtemprature1"
+            app:layout_constraintEnd_toStartOf="@+id/daytimeTemp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/daytimeTemp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="160F"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_23sdp"
+            app:layout_constraintBottom_toTopOf="@+id/daytimeTemp1"
+            app:layout_constraintEnd_toStartOf="@+id/eveningTemprature"
+            app:layout_constraintStart_toEndOf="@+id/morningtemprature"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/eveningTemprature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="160F"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_23sdp"
+            app:layout_constraintBottom_toTopOf="@+id/eveningTemprature1"
+            app:layout_constraintEnd_toStartOf="@+id/NightTemprature"
+            app:layout_constraintStart_toEndOf="@+id/daytimeTemp"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/NightTemprature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="160F"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_23sdp"
+            app:layout_constraintBottom_toTopOf="@+id/NightTemprature1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/eveningTemprature"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/morningtemprature1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="8am"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_13sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/daytimeTemp1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/morningtemprature" />
+
+        <TextView
+            android:id="@+id/daytimeTemp1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1am"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_13sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/eveningTemprature1"
+            app:layout_constraintStart_toEndOf="@+id/morningtemprature1"
+            app:layout_constraintTop_toBottomOf="@+id/daytimeTemp" />
+
+        <TextView
+            android:id="@+id/eveningTemprature1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5pm"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_13sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/NightTemprature1"
+            app:layout_constraintStart_toEndOf="@+id/daytimeTemp1"
+            app:layout_constraintTop_toBottomOf="@+id/eveningTemprature" />
+
+        <TextView
+            android:id="@+id/NightTemprature1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="11pm"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_13sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/eveningTemprature1"
+            app:layout_constraintTop_toBottomOf="@+id/NightTemprature" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <RelativeLayout
+        android:id="@+id/FifthContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/FourthContainer">
+
+        <androidx.recyclerview.widget.RecyclerView
+
+            android:id="@+id/HourlyWeatherRecylerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
+    </RelativeLayout>
+
+
+</RelativeLayout>
