@@ -75,9 +75,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         init();
-        if(obj!=null){
-            setData(obj);
-        }
+
 
         sharedPreferences = getSharedPreferences("user_settings", MODE_PRIVATE);
         tempunit = sharedPreferences.getString("tempunit", "F");
@@ -86,8 +84,13 @@ public class MainActivity extends AppCompatActivity {
         city = sharedPreferences.getString("city", "Chicago, Illinois");
         cityname = city;
 
-        if(hasNetworkConnection())
-        dataRequest();
+        if(obj!=null){
+            setData(obj);
+        }
+        else {
+            if (hasNetworkConnection())
+                dataRequest();
+        }
 
         SwipeRefreshLayout swipe = findViewById(R.id.pulltorefresh);
         swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
