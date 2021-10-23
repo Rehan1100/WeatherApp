@@ -21,6 +21,7 @@
     </ProgressBar>
 
 
+
     <RelativeLayout
         android:id="@+id/layout"
         android:visibility="visible"
@@ -55,7 +56,6 @@
                 android:textSize="@dimen/_12sdp" />
         </RelativeLayout>
     </RelativeLayout>
-
 
 
     <RelativeLayout
@@ -125,7 +125,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/FourthContainer"
+            android:id="@+id/HumadityConatiner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
