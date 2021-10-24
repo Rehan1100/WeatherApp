@@ -60,8 +60,10 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/layout">
 
-
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
 
             <RelativeLayout
                 android:id="@+id/mainLayout"
@@ -344,5 +346,6 @@
 
                 </RelativeLayout>
             </RelativeLayout>
+</ScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </RelativeLayout>
