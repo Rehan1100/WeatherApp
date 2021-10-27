@@ -12,5 +12,5 @@
     <string name="no_internet">No Internet Connection</string>
     <string name="invalid_loc">Not a valid location</string>
     <string name="dailog_text">For US locations, Enter as \'city\' or \'city, state \n\nFor International locations, Enter as \'city, country\'</string>
-    <string name="api_key">bf4347122212a011a6c76efa45d2cdf</string>
+    <string name="api_key">4a7f66f7868207ca0b55c014ec939235</string>
 </resources>

@@ -65,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView HourlyWeatherrecyclerView;
     SharedPreferences sharedPreferences;
 
+
+
     double lat = 41.8675766;
     double lon = -87.616232;
 
@@ -83,6 +85,13 @@ public class MainActivity extends AppCompatActivity {
         lon = Double.parseDouble(sharedPreferences.getString("lon", "41.8675766"));
         city = sharedPreferences.getString("city", "Chicago, Illinois");
         cityname = city;
+
+        double[] arr = getLatLon(city);
+        if(arr.length>1){
+            lat = arr[0];
+            lon = arr[1];
+        }
+
 
         if(obj!=null){
             setData(obj);
