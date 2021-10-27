@@ -324,7 +324,7 @@ public class MainActivity extends AppCompatActivity {
                         .build();
 
                 WeatherApi weatherApi = retrofit.create(WeatherApi.class);
-                Call<Root> call = weatherApi.getWeather(lat, lon, "4a7f66f7868207ca0b55c014ec939235");
+                Call<Root> call = weatherApi.getWeather(lat, lon, getString(R.string.api_key));
                 call.enqueue(new Callback<Root>() {
                     @Override
                     public void onResponse(Call<Root> call, Response<Root> response) {
